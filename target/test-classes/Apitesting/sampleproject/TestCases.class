@@ -1,0 +1,72 @@
+Êşº¾   3*   "Apitesting/sampleproject/TestCases   java/lang/Object res 4Lio/restassured/specification/ResponseSpecification; <init> ()V Code
+  
+    LineNumberTable LocalVariableTable this $LApitesting/sampleproject/TestCases; setSpecification RuntimeVisibleAnnotations $Lorg/testng/annotations/BeforeClass;
+     io/restassured/RestAssured   expect 6()Lio/restassured/specification/ResponseSpecification;	      HTTP/1.1 200 OK
+      2io/restassured/specification/ResponseSpecification ! " 
+statusLine H(Ljava/lang/String;)Lio/restassured/specification/ResponseSpecification;	 $ &  % io/restassured/http/ContentType ' ( JSON !Lio/restassured/http/ContentType;
+  * + , 
+contentType W(Lio/restassured/http/ContentType;)Lio/restassured/specification/ResponseSpecification;
+ . 0  / ,Apitesting/sampleproject/ExtentReportManager 1  createReport testFetchUsers Lorg/testng/annotations/Test;	 . 5 6 7  reports /Lcom/relevantcodes/extentreports/ExtentReports; 2 : Fetching all user details.
+ < >  = -com/relevantcodes/extentreports/ExtentReports ? @ 	startTest R(Ljava/lang/String;Ljava/lang/String;)Lcom/relevantcodes/extentreports/ExtentTest;	 . B C D test ,Lcom/relevantcodes/extentreports/ExtentTest;	 F H  G )com/relevantcodes/extentreports/LogStatus I J INFO +Lcom/relevantcodes/extentreports/LogStatus; L Specifying the base URI N https://reqres.in
+ P R  Q *com/relevantcodes/extentreports/ExtentTest S T log R(Lcom/relevantcodes/extentreports/LogStatus;Ljava/lang/String;Ljava/lang/String;)V V API Call X GET Z Resource url \ api/users?page=2 ^ Field Comparison ` page	  b c d  baseURI Ljava/lang/String;
+  f g h given 5()Lio/restassured/specification/RequestSpecification;
+ j l  k 1io/restassured/specification/RequestSpecification m h when
+ j o p q get P(Ljava/lang/String;[Ljava/lang/Object;)Lio/restassured/response/ResponseOptions;  s  io/restassured/response/Response
+ r u v w then 6()Lio/restassured/response/ValidatableResponseOptions;  y +io/restassured/response/ValidatableResponse
+ x { | } spec j(Lio/restassured/specification/ResponseSpecification;)Lio/restassured/response/ValidatableResponseOptions;
+ x  € w 
+assertThat
+ ‚ „  ƒ java/lang/Integer … †  valueOf (I)Ljava/lang/Integer;
+ ˆ Š  ‰ org/hamcrest/core/IsEqual ‹ Œ  equalTo *(Ljava/lang/Object;)Lorg/hamcrest/Matcher;
+ x    body q(Ljava/lang/String;Lorg/hamcrest/Matcher;[Ljava/lang/Object;)Lio/restassured/response/ValidatableResponseOptions; 
+testFetchUser ‘ ” Fetching single user details. – 
+api/users/2 ˜ data  š org/json/simple/JSONObject
+ ™ 
+  id
+ ™ Ÿ   ¡ put 8(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; £ email ¥ janet.weaver@reqres.in § 
+first_name © Janet « 	last_name ­ Weaver ¯ avatar ± 'https://reqres.in/img/faces/2-image.jpg Lorg/json/simple/JSONObject; testUserNotFound ³ ¶ User not found. ¸ api/users/23 º HTTP/1.1 404 Not Found resp testFetchListResource ¼ ¿ Fetch list of resouces. Á 
+api/unknown testFetchResource Â Å Fetch single resouce. Ç 
+api/unknown/2 É  data.id testFetchResourceNotFound Ê Í Resource not found. Ï api/unknown/23 testDelayedResponse Ğ Ó Fetch Delayed Response Õ api/users?delay=3 testCreateUser Ö Ù Create a new User Û POST İ  Payload ß {name: "Megha", job: "QA"} á 	api/users ã name  å java/util/HashMap
+ ä 
+ è Megha
+ ä Ÿ ë job í QA ï application/json
+ j ñ + ò G(Ljava/lang/String;)Lio/restassured/specification/RequestSpecification;
+ j ô  õ G(Ljava/lang/Object;)Lio/restassured/specification/RequestSpecification;
+ j ÷ ø q post params Ljava/util/HashMap; LocalVariableTypeTable 9Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/String;>; testRegisterUserSuccessful ı  User register successful 1{email: "eve.holt@reqres.in", password: "123456"} api/register eve.holt@reqres.in password
+ 123456 testRegisterUserUnsuccessful
+ User register unsuccessful {email: "eve.holt@reqres.in"} error Missing password testLoginSuccessful User login successful 	api/login token QpwL5tke4Pnpja7X4 testLoginUnSuccessful" User login unsuccessful 
+closeReport #Lorg/testng/annotations/AfterClass;
+ <&'  flush 
+SourceFile TestCases.java !                  	   /     *· 
+±            
+                        	   ^     $*¸ µ *´ ¹  W*´ ² #¹ ) W¸ -±                    #  
+       $      2        3   	   Ò     Œ² 489¶ ;³ A² A² EKM¶ O² A² EUW¶ O² A² EY[¶ O² A² E]_¶ OM³ a¸ e¹ i [½ ¹ n À r¹ t À x*´ ¹ z À x¹ ~ À x_¸ ¸ ‡½ ¹  W±       "    " 
+ #  $ ' % 4 & A ' F ( ‹ * 
+       Œ      ‘        3   	  (     À² 4’“¶ ;³ A² A² EKM¶ O² A² EUW¶ O² A² EY•¶ O² A² E]—¶ OM³ a» ™Y· ›L+œ¸ ¶ W+¢¤¶ W+¦¨¶ W+ª¬¶ W+®°¶ W¸ e¹ i •½ ¹ n À r¹ t À x*´ ¹ z À x¹ ~ À x—+¸ ‡½ ¹  W±       :    0 
+ 1  2 ' 3 4 4 A 5 F 6 N 7 Y 8 b 9 k : t ; } < ¿ > 
+       À     N r ˜ ²   ³        3   	   ù     ² 4´µ¶ ;³ A² A² EKM¶ O² A² EUW¶ O² A² EY·¶ O² A² E]—¶ O¸ L+¹¹  W+² #¹ ) WM³ a¸ e¹ i ·½ ¹ n À r¹ t À x+¹ z À x¹ ~ À x—¸ ‡½ ¹  W±       . 
+   C 
+ D  E ' F 4 G A I E J N K X M ] N œ P 
+            E X »    ¼        3   	   Ò     Œ² 4½¾¶ ;³ A² A² EKM¶ O² A² EUW¶ O² A² EYÀ¶ O² A² E]_¶ OM³ a¸ e¹ i À½ ¹ n À r¹ t À x*´ ¹ z À x¹ ~ À x_¸ ¸ ‡½ ¹  W±       "    U 
+ V  W ' X 4 Y A Z F [ ‹ ] 
+       Œ      Â        3   	   Ò     Œ² 4ÃÄ¶ ;³ A² A² EKM¶ O² A² EUW¶ O² A² EYÆ¶ O² A² E]È¶ OM³ a¸ e¹ i Æ½ ¹ n À r¹ t À x*´ ¹ z À x¹ ~ À xÈ¸ ¸ ‡½ ¹  W±       "    b 
+ c  d ' e 4 f A g F h ‹ j 
+       Œ      Ê        3   	   ù     ² 4ËÌ¶ ;³ A² A² EKM¶ O² A² EUW¶ O² A² EYÎ¶ O² A² E]_¶ O¸ L+¹¹  W+² #¹ ) WM³ a¸ e¹ i Î½ ¹ n À r¹ t À x+¹ z À x¹ ~ À x_¸ ‡½ ¹  W±       . 
+   o 
+ p  q ' r 4 s A u E v N w X y ] z œ | 
+            E X »    Ğ        3   	   Ò     Œ² 4ÑÒ¶ ;³ A² A² EKM¶ O² A² EUW¶ O² A² EYÔ¶ O² A² E]_¶ OM³ a¸ e¹ i Ô½ ¹ n À r¹ t À x*´ ¹ z À x¹ ~ À x_¸ ¸ ‡½ ¹  W±       "    ‚ 
+ ƒ  „ ' … 4 † A ‡ F ˆ ‹ Š 
+       Œ      Ö        3   	  $     ²² 4×Ø¶ ;³ A² A² EKM¶ O² A² EUÚ¶ O² A² EÜŞ¶ O² A² EYà¶ O² A² E]â¶ OM³ a» äY· æL+âç¶ éW+êì¶ éW¸ e¹ i î¹ ğ +¹ ó à½ ¹ ö À r¹ t À x¹ ~ À xâç¸ ‡½ ¹  W±       2     
+ ‘  ’ ' “ 4 ” A • N – S — [ ˜ d ™ m š ± œ 
+       ²     [ W ù ú  û     [ W ù ü   ı        3   	  ,     º² 4şÿ¶ ;³ A² A² EKM¶ O² A² EUÚ¶ O² A² EÜ¶ O² A² EY¶ O² A² E]œ¶ OM³ a» äY· æL+¢¶ éW+ 	¶ éW¸ e¹ i î¹ ğ +¹ ó ½ ¹ ö À r¹ t À x¹ ~ À xœ ¸ ¸ ‡½ ¹  W±       2    ¢ 
+ £  ¤ ' ¥ 5 ¦ C § P ¨ U © ] ª g « r ¬ ¹ ® 
+       º     ] ] ù ú  û     ] ] ù ü  
+        3   	        ²² 4
+¶ ;³ A² A² EKM¶ O² A² EUÚ¶ O² A² EÜ¶ O² A² EY¶ O² A² E]¶ OM³ a» äY· æL+¢¶ éW¸ e¹ i î¹ ğ +¹ ó ½ ¹ ö À r¹ t À x¹ ~ À x¸ ‡½ ¹  W±       . 
+   ´  µ  ¶ ) · 7 ¸ E ¹ S º X » ` ¼ j ½ ± ¿ 
+       ²     ` R ù ú  û     ` R ù ü          3   	  /     ½² 4¶ ;³ A² A² EKM¶ O² A² EUÚ¶ O² A² EÜ¶ O² A² EY¶ O² A² E]¶ OM³ a» äY· æL+¢¶ éW+ 	¶ éW¸ e¹ i î¹ ğ +¹ ó ½ ¹ ö À r¹ t À x¹ ~ À x¸ ‡½ ¹  W±       2    Å  Æ  Ç ) È 7 É E Ê S Ë X Ì ` Í j Î u Ï ¼ Ñ 
+       ½     ` ] ù ú  û     ` ] ù ü          3   	        ²² 4 !¶ ;³ A² A² EKM¶ O² A² EUÚ¶ O² A² EÜ¶ O² A² EY¶ O² A² E]¶ OM³ a» äY· æL+¢¶ éW¸ e¹ i î¹ ğ +¹ ó ½ ¹ ö À r¹ t À x¹ ~ À x¸ ‡½ ¹  W±       . 
+   ×  Ø  Ù ) Ú 7 Û E Ü S İ X Ş ` ß j à ± â 
+       ²     ` R ù ú  û     ` R ù ü  #       $   	   5      ² 4¶%±       
+    æ  è 
+             (   )
